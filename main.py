@@ -3,23 +3,21 @@ import time
 from awakened_or_not import awakened_or_not
 from graph_stuff import generate_graph
 from probability_stuff import probability_stuff
-from simulate_new_banner import simulate_new_banner
 from simulate_old_banner import simulate_old_banner
+from simulate_new_banner import simulate_new_banner
+from simulate_new_new_banner import simulate_new_new_banner
 
 
 # ask for inputs
 awakened_input = input("Is the valk awakened? (yes/no) ")
-banner_type = input("Is it new type of banner? (yes/no) ")
+banner_type = input("Banner type? (0/1/2) ")
 qtty_simulation = int(input("How many times to simulate? "))
 
 awakened_sanitized = False
 if awakened_input in ["yes", "ye", "y"]:
     awakened_sanitized = True
 
-banner_type_sanitized = False
-if banner_type in ["yes", "ye", "y"]:
-    banner_type_sanitized = True
-
+banner_type_sanitized = int(banner_type)
 
 # calculate stuff
 start = time.time()
@@ -36,10 +34,12 @@ total_dic = {
 }
 
 for x in range(qtty_simulation):
-    if not banner_type_sanitized:
+    if banner_type_sanitized == 0:
         current_sim = simulate_old_banner(awakened, probability_stuff)
-    else:
+    elif banner_type_sanitized == 1:
         current_sim = simulate_new_banner(awakened, probability_stuff)
+    else:
+        current_sim = simulate_new_new_banner(awakened, probability_stuff)
 
     total_dic["simulations"] += 1
     for y in range(9):
@@ -60,7 +60,7 @@ end = time.time()
 # print results
 print(f'\nSimulated {total_dic["simulations"]} times for getting a 3s '
       f'{"awakened" if awakened_sanitized else "non-awakened"} valk on the '
-      f'{"new banner system (5.9+)" if banner_type_sanitized else "old banner system (5.8-)"}')
+      f'{"new banner system (5.9+)" if banner_type_sanitized == 1 else "old banner system (5.8-)" if banner_type_sanitized == 0 else "new new banner system (7.3+)"}')
 
 for x, y in [(" s0", 0), (" s1", 1), (" s2", 2), (" s3", 3),
              (" 2s", 4), ("2s1", 5), ("2s2", 6), ("2s3", 7), (" 3s", 8)]:
