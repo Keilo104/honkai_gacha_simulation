@@ -17,8 +17,8 @@ def simulate_old_banner(awk_values, probability):
     frags_through_frag_drop = 0
     frags_through_essentine = 0
 
-    next_rankup = awk_values["rankup_list"][0]
     rankup_count = 0
+    next_rankup = awk_values["rankup_list"][rankup_count]
 
     while frag_count < awk_values["rankup_list"][7]:
         while frag_count >= next_rankup and got_valk_flag:
