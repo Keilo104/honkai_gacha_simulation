@@ -1,5 +1,4 @@
 import random
-from math import floor
 
 
 def simulate_new_new_banner(awk_values, probability):
